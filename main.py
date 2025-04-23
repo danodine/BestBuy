@@ -1,16 +1,30 @@
 import products
 import store
 
+# List of products available in the store
 product_list = [
     products.Product("MacBook Air M2", price=1450, quantity=100),
     products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
     products.Product("Google Pixel 7", price=500, quantity=250)
 ]
 
+# Creating a store instance with the product list
 best_buy = store.Store(product_list)
 
 
 def start(store_obj):
+    """
+    Start the command-line interface for interacting with the store.
+
+    Provides a menu-based system where the user can:
+    1. List all products in the store.
+    2. View the total quantity of items available in the store.
+    3. Place an order by selecting products and quantities.
+    4. Exit the program.
+
+    Parameters:
+        store_obj (store.Store): An instance of the Store class containing product data.
+    """
     while True:
         print("\n==== Welcome to Best Buy ====")
         print("1. List all products in store")
@@ -65,4 +79,5 @@ def start(store_obj):
 
 
 if __name__ == "__main__":
+    # Starts the store interface when script is run directly
     start(best_buy)
