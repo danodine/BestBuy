@@ -13,6 +13,7 @@ class Product:
     quantity = 0
     active = False
 
+
     def __init__(self, name, price, quantity):
         """
         Initializes a new Product instance with a name, price, and quantity.
@@ -38,6 +39,7 @@ class Product:
         self.quantity = quantity
         self.active = True
 
+
     def get_quantity(self):
         """
         Returns the current quantity of the product in stock.
@@ -46,6 +48,7 @@ class Product:
             int: The available stock quantity.
         """
         return self.quantity
+
 
     def set_quantity(self, quantity):
         """
@@ -56,6 +59,7 @@ class Product:
         """
         self.quantity = quantity
 
+
     def is_active(self):
         """
         Checks if the product is active (available for purchase).
@@ -65,13 +69,16 @@ class Product:
         """
         return self.active
 
+
     def activate(self):
         """Activates the product, making it available for purchase."""
         self.active = True
 
+
     def deactivate(self):
         """Deactivates the product, making it unavailable for purchase."""
         self.active = False
+
 
     def show(self):
         """
@@ -81,6 +88,7 @@ class Product:
             str: Product name, price, and quantity.
         """
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+
 
     def buy(self, quantity):
         """
@@ -119,7 +127,6 @@ def main():
 
     bose.set_quantity(1000)
     bose.show()
-
 
 if __name__ == "__main__":
     main()

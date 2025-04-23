@@ -16,6 +16,7 @@ class Store:
         """
         self.products = products
 
+
     def add_product(self, product):
         """
         Adds a product to the store's inventory.
@@ -24,6 +25,7 @@ class Store:
             product (Product): The product to add.
         """
         self.products.append(product)
+
 
     def remove_product(self, product):
         """
@@ -35,6 +37,7 @@ class Store:
         if product in self.products:
             self.products.remove(product)
 
+
     def get_total_quantity(self):
         """
         Calculates the total quantity of all products in the store.
@@ -44,6 +47,7 @@ class Store:
         """
         return sum(product.quantity for product in self.products)
 
+
     def get_all_products(self):
         """
         Retrieves all currently active products.
@@ -52,6 +56,7 @@ class Store:
             list: A list of active Product objects.
         """
         return [product for product in self.products if product.is_active()]
+
 
     def order(self, shopping_list):
         """
@@ -71,6 +76,7 @@ class Store:
         for product, quantity in shopping_list:
             total += product.buy(quantity)
         return total
+
 
 def main():
     """
