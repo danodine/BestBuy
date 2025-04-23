@@ -1,4 +1,4 @@
-import products  # not 'from products import Product'
+import products
 
 class Store:
     def __init__(self, products):
