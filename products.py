@@ -37,6 +37,7 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.active = True
+        self.promotion = None
 
     def get_quantity(self):
         """
@@ -55,6 +56,25 @@ class Product:
             quantity (int): The new quantity value.
         """
         self.quantity = quantity
+
+    def set_promotion(self, promotion):
+        """
+        Sets a promotion for the product.
+
+        Args:
+            promotion (Promotion): The promotion to apply.
+        """
+        self.promotion = promotion
+
+    def get_promotion(self):
+        """
+        Gets the current promotion.
+
+        Returns:
+            Promotion or None: The current promotion if any.
+        """
+        return self.promotion
+
 
     def is_active(self):
         """
@@ -78,31 +98,38 @@ class Product:
         Returns a string representation of the product's details.
 
         Returns:
-            str: Product name, price, and quantity.
+            str: Product name, price, quantity, and promotion.
         """
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        promo_text = f" [Promotion: {self.promotion.name}]" if self.promotion else ""
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}{promo_text}"
 
-    def buy(self, quantity):
-        """
-        Processes a purchase of the given quantity of the product.
 
-        Args:
-            quantity (int): The number of units to buy.
+def buy(self, quantity):
+    """
+    Processes a purchase of the given quantity of the product.
 
-        Returns:
-            float: Total cost of the purchase.
+    Args:
+        quantity (int): The number of units to buy.
 
-        Side Effects:
-            Reduces the available quantity.
-            Deactivates the product if quantity becomes zero.
-        """
-        if quantity > self.quantity:
-            raise ValueError("Not enough stock available.")
+    Returns:
+        float: Total cost of the purchase.
+
+    Raises:
+        ValueError: If the requested quantity exceeds available stock.
+    """
+    if quantity > self.quantity:
+        raise ValueError("Not enough stock available.")
+
+    if self.promotion:
+        total_price = self.promotion.apply_promotion(self, quantity)
+    else:
         total_price = self.price * quantity
-        self.quantity -= quantity
-        if self.quantity == 0:
-            self.deactivate()
-        return total_price
+
+    self.quantity -= quantity
+    if self.quantity == 0:
+        self.deactivate()
+
+    return total_price
 
 
 class NonStockedProduct(Product):
