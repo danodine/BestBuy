@@ -104,32 +104,32 @@ class Product:
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}{promo_text}"
 
 
-def buy(self, quantity):
-    """
-    Processes a purchase of the given quantity of the product.
+    def buy(self, quantity):
+        """
+        Processes a purchase of the given quantity of the product.
 
-    Args:
-        quantity (int): The number of units to buy.
+        Args:
+            quantity (int): The number of units to buy.
 
-    Returns:
-        float: Total cost of the purchase.
+        Returns:
+            float: Total cost of the purchase.
 
-    Raises:
-        ValueError: If the requested quantity exceeds available stock.
-    """
-    if quantity > self.quantity:
-        raise ValueError("Not enough stock available.")
+        Raises:
+            ValueError: If the requested quantity exceeds available stock.
+        """
+        if quantity > self.quantity:
+            raise ValueError("Not enough stock available.")
 
-    if self.promotion:
-        total_price = self.promotion.apply_promotion(self, quantity)
-    else:
-        total_price = self.price * quantity
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
+            total_price = self.price * quantity
 
-    self.quantity -= quantity
-    if self.quantity == 0:
-        self.deactivate()
+        self.quantity -= quantity
+        if self.quantity == 0:
+            self.deactivate()
 
-    return total_price
+        return total_price
 
 
 class NonStockedProduct(Product):
