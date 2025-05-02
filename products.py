@@ -104,6 +104,8 @@ class Product:
             Reduces the available quantity.
             Deactivates the product if quantity becomes zero.
         """
+        if quantity > self.quantity:
+            raise ValueError("Not enough stock available.")
         total_price = self.price * quantity
         self.quantity -= quantity
         if self.quantity == 0:
