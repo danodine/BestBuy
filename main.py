@@ -57,18 +57,40 @@ def start(store_obj):
                 try:
                     index = int(selection) - 1
                     if 0 <= index < len(active_products):
-                        quantity = int(input(f"Enter quantity for {active_products[index].name}: "))
-                        shopping_list.append((active_products[index], quantity))
+                        try:
+                            quantity = int(input(f"Enter quantity for {active_products[index].name}: "))
+                            product = active_products[index]
+
+                            if isinstance(product, products.LimitedProduct) and quantity > product.maximum:
+                                print(f"You can only purchase up to {product.maximum} units of {product.name}.")
+                            elif quantity > product.get_quantity():
+                                print(f"Not enough stock for {product.name}. Available: {product.get_quantity()}")
+                            else:
+                                shopping_list.append((product, quantity))
+                        except ValueError:
+                            print("Please enter a valid number.")
                     else:
                         print("Invalid product number.")
-                except ValueError:
-                    print("Please enter valid numbers.")
+                except ValueError as err:
+                    print(err)
 
-            try:
-                total_cost = store_obj.order(shopping_list)
-                print(f"\nOrder placed! Total cost: ${total_cost:.2f}")
-            except Exception as e:
-                print(f"Order failed: {e}")
+            valid_shopping_list = []
+            for product, quantity in shopping_list:
+                if isinstance(product, products.LimitedProduct) and quantity > product.maximum:
+                    print(f"Cannot order more than {product.maximum} units of {product.name}. Skipping.")
+                elif product.get_quantity() < quantity:
+                    print(f"Not enough stock for {product.name}. Available: {product.get_quantity()}. Skipping.")
+                else:
+                    valid_shopping_list.append((product, quantity))
+
+            if valid_shopping_list:
+                try:
+                    total_cost = store_obj.order(valid_shopping_list)
+                    print(f"\nOrder placed! Total cost: ${total_cost:.2f}")
+                except Exception as e:
+                    print(f"Order failed: {e}")
+            else:
+                print("No valid items to order.")
 
         elif choice == "4":
             print("Thank you for shopping with us!")
@@ -76,6 +98,7 @@ def start(store_obj):
 
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     # Starts the store interface when script is run directly

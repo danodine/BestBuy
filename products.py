@@ -27,10 +27,13 @@ class Product:
         """
         Product.name = True
         if not name:
+            print("1")
             raise ValueError("Name cannot be empty.")
         if price < 0:
+            print("2")
             raise ValueError("Price cannot be negative.")
         if quantity < 0:
+            print("3")
             raise ValueError("Quantity cannot be negative.")
 
         self.name = name
